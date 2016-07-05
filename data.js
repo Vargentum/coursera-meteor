@@ -1,20 +1,21 @@
 import {Mongo} from 'meteor/mongo'
-
 export const Images = new Mongo.Collection('images')
+
+const addImagesFrom = (path) =>
+  _.range(1,10).forEach(
+    (n) => Images.insert({
+      src: `${path}${n}.png`,
+      alt: `description for image ${n}`
+    })
+  )
 
 if (Meteor.isServer) {
   console.log(Images.find().count())
 
   Meteor.startup(() => {
     if (Images.find().count() === 0) {
-      Images.insert({
-        src: 'icon-dark.jpg',
-        alt: 'image with dark background'
-      })
-      Images.insert({
-        src: 'icon-white.jpg',
-        alt: 'image with white background'
-      })
+      addImagesFrom('m/')
+      addImagesFrom('w/')
     }
   })
 }
