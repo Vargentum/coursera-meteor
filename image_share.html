@@ -14,10 +14,11 @@
   {{#each images}}
     <div class="col-sm-6 col-md-4">
       <div class="thumbnail">
-        <img class="js-image" src={{src}} alt={{alt}} />
+        <img class="js-image" src={{src}} alt={{alt}} id={{_id}} />
         <div class="caption">
           <h3>Thumbnail label</h3>
           <p>Text</p>
+          <button class="btn btn-warning js-del-img">Delete</button>
         </div>
       </div>
     </div>
