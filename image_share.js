@@ -3,7 +3,7 @@ import {Images} from './data'
 
 if (Meteor.isClient){
   Template.images.helpers({
-    images: Images.find()
+    images: Images.find({}, {sort: {rating: -1}}) // no docs for this
   })
 
   Template.images.events({
@@ -11,9 +11,16 @@ if (Meteor.isClient){
       $(target).css('width', '50px')
     },
     'click .js-del-img': function(ev) {
+      const image_id = this._id // context is the Template (`image` in Images loop)
       $(`#${this._id}`).hide('slow', () => 
-        Images.remove({_id: this._id}) // this refers to Template data (model ?)
+        Images.remove({_id: image_id}) 
       )
+    },
+    'click .js-rate-image': function(ev) {
+      const rating = $(ev.currentTarget).data('userrating')
+      const image_id = this.id // {{> module }} creates its own context
+      Images.update({_id: image_id}, {$set: {rating}})
+
     }
   })
 }
