@@ -1,16 +1,10 @@
-if (Meteor.isClient){
-  const imgData = {
-    images: [{
-      src: 'icon-dark.jpg',
-      alt: 'image with dark background'
-    },
-    {
-      src: 'icon-white.jpg',
-      alt: 'image with white background'
-    }]
-  }
+import {Images} from './data'
 
-  Template.images.helpers(imgData)
+
+if (Meteor.isClient){
+  Template.images.helpers({
+    images: Images.find()
+  })
 
   Template.images.events({
     'click .js-image': function({target}) {
