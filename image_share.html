@@ -5,7 +5,8 @@
 <body>
 	<h1>Welcome to Meteor!</h1>
   <div class="container">
-	  {{> images}}
+    {{> addImage }}
+	  {{> images }}
   </div>
 </body>
 
@@ -27,4 +28,13 @@
     </div>
   {{/each}}
   </div>
+</template>
+
+
+<template name="addImage">
+  <form class="js-form">
+    <input type="text" name="img_src" /><br />
+    <input type="text" name="img_alt" /><br />
+    <button type="submit" class="btn btn-success">Upload</button>
+  </form>
 </template>

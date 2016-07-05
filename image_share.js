@@ -1,9 +1,10 @@
 import {Images} from './data'
+// import getData from 'get-form-data'
 
 
 if (Meteor.isClient){
   Template.images.helpers({
-    images: Images.find({}, {sort: {rating: -1}}) // no docs for this
+    images: Images.find({}, {sort: {createdOn: -1, rating: -1}}) // no docs for this
   })
 
   Template.images.events({
@@ -20,7 +21,18 @@ if (Meteor.isClient){
       const rating = $(ev.currentTarget).data('userrating')
       const image_id = this.id // {{> module }} creates its own context
       Images.update({_id: image_id}, {$set: {rating}})
+    }
+  })
 
+  Template.addImage.events({
+    'submit .js-form': function(ev) {
+      const form = ev.target
+      Images.insert({
+        src: form.img_src.value,
+        alt: form.img_alt.value
+      })
+      ev.preventDefault()
+      form.reset()
     }
   })
 }
